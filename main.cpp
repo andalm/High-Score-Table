@@ -12,13 +12,13 @@ using namespace std;
     vector<long> scores;
 };
 
-void parse(ifstream &myfile, vector<top_table> &cases)
+void parse(ifstream &input_file, vector<top_table> &cases)
 {
     string line;
     smatch score_table_matches;
     top_table *current_case;
 
-    if (getline(myfile, line))
+    if (getline(input_file, line))
     {
         if (regex_match(line, regex("^\\d{1}$")))
         {
@@ -43,22 +43,21 @@ void parse(ifstream &myfile, vector<top_table> &cases)
                 current_case->scores.push_back(stol(score_table_matches[2]));
             }
         }
-        parse(myfile, cases);
+        parse(input_file, cases);
     }
 }
 
 int main()
 {
     vector<top_table> cases;
-    ifstream myfile("input.in");
-    if (myfile.is_open())
+    ifstream input_file("input.in");
+    if (input_file.is_open())
     {
-        parse(myfile, cases);
-        myfile.close();
-        cout << "Number of cases " << cases.capacity() << endl;
-        cout << "Case 5 name 0 " << cases[1].names.size() << endl;
-        //cout << "Case 5 score 0 " << cases[0].scores.capacity() << endl;
-        //cout << "Error Case 6 name 0 " << cases[6].names[0] << endl;
+        parse(input_file, cases);
+        input_file.close();
+        for(uint it = 0; it < cases.size(); ++it) {
+            cout << cases[it].names[0] << endl;
+        }
     }
     return 0;
 }
